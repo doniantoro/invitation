@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Party!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Fredoka', cursive;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevents horizontal scroll, but allows vertical */
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            color: #ff6b6b;
+            text-shadow: 4px 4px 0px #ffd166;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+            color: #4ecdc4;
+            font-weight: 600;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+            margin: 50px 0;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            margin-bottom: 30px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 35px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border: 8px solid #4ecdc4;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 25px;
+            border: 4px solid #ffd166;
+        }
+
+        .party-hat {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 100px;
+            background: linear-gradient(45deg, #ff6b6b, #ff9e9e);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 2;
+        }
+
+        .party-hat::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 30px;
+            background: #ffd166;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .details {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            border: 4px solid #ffd166;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .details h2 {
+            color: #ff6b6b;
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 35px;
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* Forces 3 columns in one row */
+            gap: 20px; /* Reduced gap for tighter fit in one line */
+            justify-items: center;
+        }
+
+        .detail-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 25px; /* Slightly reduced padding for better fit */
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid #4ecdc4;
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+            width: 100%; /* Ensures cards fill their grid area */
+            min-width: 0; /* Allows shrinking if needed */
+        }
+
+        .detail-card:hover {
+            transform: translateY(-10px) rotate(2deg);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .detail-card h3 {
+            color: #ff6b6b;
+            font-size: 1.6rem; /* Slightly smaller for better fit */
+            margin-bottom: 15px;
+        }
+
+        .detail-card p {
+            color: #555;
+            font-size: 1.1rem; /* Adjusted for space */
+            line-height: 1.4;
+            margin-bottom: 5px;
+        }
+
+        .highlight {
+            color: #4ecdc4 !important;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 100px; /* Adds space at the bottom for scrolling */
+        }
+
+        .rsvp-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            padding: 25px 50px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+            transition: all 0.3s ease;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .rsvp-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+        }
+
+        /* Flying animals and elements - Adjusted to stay within viewport bounds */
+        .flying-element {
+            position: fixed; /* Changed to fixed for full-page coverage without affecting scroll */
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .butterfly {
+            animation: flyButterfly 25s linear infinite;
+            width: 60px;
+            height: 60px;
+        }
+
+        .bird {
+            animation: flyBird 20s linear infinite 3s;
+            width: 80px;
+            height: 80px;
+        }
+
+        .balloon {
+            animation: floatBalloon 30s ease-in-out infinite 5s;
+            width: 70px;
+            height: 100px;
+        }
+
+        .star {
+            animation: twinkleStar 8s ease-in-out infinite;
+            width: 40px;
+            height: 40px;
+        }
+
+        .confetti {
+            animation: fallConfetti 15s linear infinite;
+            width: 20px;
+            height: 20px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes flyButterfly {
+            0% { 
+                top: -10%; 
+                left: -10%;
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(10deg);
+            }
+            50% {
+                transform: rotate(-5deg);
+            }
+            100% { 
+                top: 110%; 
+                left: 110%;
+                transform: rotate(15deg);
+            }
+        }
+
+        @keyframes flyBird {
+            0% { 
+                top: 90%; 
+                right: -10%;
+                transform: rotate(0deg);
+            }
+            50% {
+                transform: rotate(-10deg);
+            }
+            100% { 
+                top: -10%; 
+                right: 110%;
+                transform: rotate(5deg);
+            }
+        }
+
+        @keyframes floatBalloon {
+            0% { 
+                bottom: -10%; 
+                left: 20%;
+                transform: scale(0.8);
+            }
+            50% {
+                transform: scale(1);
+            }
+            100% { 
+                bottom: 110%; 
+                left: 80%;
+                transform: scale(0.8);
+            }
+        }
+
+        @keyframes twinkleStar {
+            0%, 100% { 
+                opacity: 0.3;
+                transform: scale(0.8) rotate(0deg);
+            }
+            50% { 
+                opacity: 1;
+                transform: scale(1.2) rotate(180deg);
+            }
+        }
+
+        @keyframes fallConfetti {
+            0% { 
+                top: -5%; 
+                transform: rotate(0deg);
+            }
+            100% { 
+                top: 105%; 
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 3rem; }
+            .subtitle { font-size: 1.5rem; }
+            .avatar-container { width: 200px; height: 200px; }
+            .details { padding: 25px; }
+            .details-grid {
+                grid-template-columns: 1fr; /* Stacks on mobile for readability */
+            }
+            .detail-card { 
+                padding: 20px; 
+                margin-bottom: 10px;
+            }
+            .rsvp-btn { padding: 20px 40px; font-size: 1.5rem; }
+            .container { padding: 20px 10px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Flying elements - Now using fixed positioning for better scroll compatibility -->
+    <svg class="flying-element butterfly" style="animation-delay: 0s;" viewBox="0 0 100 100">
+        <path d="M20,50 Q40,20 50,50 Q60,80 80,50 L90,40 L80,50 L90,60 Z" fill="#ff9e9e"/>
+        <circle cx="30" cy="50" r="8" fill="#4ecdc4"/>
+        <circle cx="70" cy="50" r="8" fill="#4ecdc4"/>
+    </svg>
+
+    <svg class="flying-element bird" style="animation-delay: 3s;" viewBox="0 0 100 100">
+        <path d="M20,50 Q40,30 60,50 Q80,70 100,50 L90,40 L100,50 L90,60 Z" fill="#ffd166"/>
+        <circle cx="35" cy="45" r="5" fill="#333"/>
+        <path d="M25,55 L35,55" stroke="#333" stroke-width="3"/>
+    </svg>
+
+    <svg class="flying-element balloon" style="animation-delay: 5s;" viewBox="0 0 70 100">
+        <path d="M35,20 Q50,0 65,20 Q50,40 35,40 Q20,40 5,20 Q20,0 35,20 Z" fill="#ff6b6b"/>
+        <path d="M35,40 L35,80 L30,85 L40,85 Z" fill="#4ecdc4"/>
+    </svg>
+
+    <!-- Multiple stars -->
+    <svg class="flying-element star" style="animation-delay: 1s;" viewBox="0 0 100 100">
+        <polygon points="50,0 61,35 98,35 68,57 79,92 50,70 21,92 32,57 2,35 39,35" fill="#ffd166"/>
+    </svg>
+
+    <svg class="flying-element star" style="animation-delay: 4s;" viewBox="0 0 100 100">
+        <polygon points="50,0 61,35 98,35 68,57 79,92 50,70 21,92 32,57 2,35 39,35" fill="#4ecdc4"/>
+    </svg>
+
+    <!-- Confetti -->
+    <svg class="flying-element confetti" style="animation-delay: 2s;" viewBox="0 0 100 100">
+        <rect x="40" y="40" width="20" height="20" fill="#ff6b6b" transform="rotate(45)"/>
+    </svg>
+
+    <svg class="flying-element confetti" style="animation-delay: 6s;" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="10" fill="#ffd166"/>
+    </svg>
+
+    <div class="container">
+        <header>
+            <h1>🎂 Happy Birthday! 🎉</h1>
+            <p class="subtitle">Join the Fun Dijah's Celebration!</p>
+        </header>
+
+        <div class="main-content">
+            <div class="avatar-container">
+                <div class="party-hat"></div>
+                <div class="avatar">
+                    <img src="ava.jpeg" alt="Birthday celebration with smiling face and party decorations">
+                </div>
+            </div>
+
+            <div class="details">
+                <h2>🎈 Party Details 🎈</h2>
+                <div class="details-grid">
+                    <div class="detail-card">
+                        <h3>🕒 Date & Time</h3>
+                        <p>Tuesday, September 23th, 2025</p>
+                        <p class="highlight">07:00 PM - End</p>
+                    </div>
+                    <div class="detail-card">
+                        <h3>📍 Location</h3>
+                        <p>Pasola Restaurant , Ritch calton , Pacific Place</p>
+                        <p>Sudirman Central Business District</p>
+                        <p class="highlight">Jakarta, Indonesia</p>
+                    </div>
+                    <div class="detail-card">
+                        <h3>👕 Dress Code</h3>
+                        <p>Clean</p>
+                        <p class="highlight">White!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <a href="http://wa.me/6208526265660" class="rsvp-btn " style="margin-bottom:20px;">RSVP Now!</a>
+            <p style="margin-top: 39px; color: #555; font-size: 1.2rem;">
+                Please confirm ASAP • Phone: +62 89526265660
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Create more flying elements dynamically
+        function createMoreFlyingElements() {
+            const types = ['butterfly', 'bird', 'balloon', 'star', 'confetti'];
+            const colors = ['#ff6b6b', '#4ecdc4', '#ffd166', '#ff9e9e', '#45b7d1'];
+            
+            for (let i = 0; i < 15; i++) {
+                const type = types[Math.floor(Math.random() * types.length)];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                const element = document.createElement('div');
+                element.className = `flying-element ${type}`;
+                element.style.left = `${Math.random() * 100}%`;
+                element.style.top = `${Math.random() * 100}%`;
+                element.style.animationDelay = `${Math.random() * 10}s`;
+                
+                let svgContent = '';
+                switch(type) {
+                    case 'butterfly':
+                        svgContent = `<svg viewBox="0 0 100 100"><path d="M20,50 Q40,20 50,50 Q60,80 80,50 L90,40 L80,50 L90,60 Z" fill="${color}"/></svg>`;
+                        break;
+                    case 'bird':
+                        svgContent = `<svg viewBox="0 0 100 100"><path d="M20,50 Q40,30 60,50 Q80,70 100,50 L90,40 L100,50 L90,60 Z" fill="${color}"/></svg>`;
+                        break;
+                    case 'balloon':
+                        svgContent = `<svg viewBox="0 0 70 100"><path d="M35,20 Q50,0 65,20 Q50,40 35,40 Q20,40 5,20 Q20,0 35,20 Z" fill="${color}"/></svg>`;
+                        break;
+                    case 'star':
+                        svgContent = `<svg viewBox="0 0 100 100"><polygon points="50,0 61,35 98,35 68,57 79,92 50,70 21,92 32,57 2,35 39,35" fill="${color}"/></svg>`;
+                        break;
+                    case 'confetti':
+                        svgContent = `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r
